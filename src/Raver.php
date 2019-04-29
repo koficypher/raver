@@ -15,7 +15,7 @@ class Raver extends Executor
     }
 
     /**
-     * Json encode's and encrypts data into the required format
+     * Json encode's and encrypts data into the required format.
      *
      * @param array $data
      * @return array payload
