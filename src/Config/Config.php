@@ -1,4 +1,15 @@
 <?php
+
+/*
+ * Raver - Unofficial Rave PHP SDK
+ *
+ * Copyright - 2019
+ *
+ * MIT
+ *
+ * Kofi Cypher <skcypher6@gmail.com>
+ */
+
 namespace Raver\Config;
 
 use Dotenv\Dotenv;
