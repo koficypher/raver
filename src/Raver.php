@@ -38,6 +38,12 @@ class Raver extends Executor
         return $postdata;
     }
 
+    /**
+     * Inititate payment process for a card
+     *
+     * @param array $data
+     * @return json payload
+     */
     public function initiateCardPayment($data)
     {
         $url = '/flwv3-pug/getpaidx/api/charge';
