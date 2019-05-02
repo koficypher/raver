@@ -8,6 +8,8 @@ class Raver extends Executor
 {
     public $helper;
 
+    public $res;
+
     public function __construct()
     {
         parent::__construct();
@@ -27,7 +29,7 @@ class Raver extends Executor
 
         //encrypts the card data with the key
         $new_data_final = $this->encryptCard($new_data);
-        // var_dump($new_data_final);
+
         //prepares data into the right format
         $postdata = [
           'PBFPubKey' => $this->config_vars['public_key'],
@@ -47,15 +49,66 @@ class Raver extends Executor
     public function initiateCardPayment($data)
     {
         $url = '/flwv3-pug/getpaidx/api/charge';
-        //get and set data
-        $option = $data;
         //prepare data
-        $options = $this->prepareData($option);
-        //  var_dump($options);
+        $options = $this->prepareData($data);
+        
         //post data
-        $res = $this->postCharge($options, $url);
+        $response = $this->postCharge($options, $url);
+        
+        //assign response to the global scope
+        $this->res = $response;
+        
+        return  $this->getStep($response, $data);
+        //return $this;
+    }
 
-        echo $res;
+    /**
+     * Simulated step of the various stages in a card transaction
+     *
+     * @param json $response from the initiateCard method
+     * @param array $data - from the initiateCard method
+     * @return void
+     */
+    public function getStep($response, $data)
+    {
+        $load = $response != null ? json_decode($response): exit('empty response');
+         //var_dump($data->message);
+        if($load->status === "success" && $load->message === "AUTH_SUGGESTION"){
+             if($load->data->suggested_auth === 'PIN'){
+
+                    $data['suggested_auth'] = 'pin';
+
+                    $this->initiateCardPayment($data);
+             }elseif ($load->data->suggested_auth === 'NOAUTH_INTERNATIONAL'){
+                   echo 'Do nothing';
+             }elseif ($load->data->suggested_auth === 'AVS_VBVSECURECODE'){
+                 echo 'Add Address Details';
+             }
+        }elseif ($load->status === "success" && $load->message === "V-COMP") {
+            # code...
+              if($load->data->chargeResponseCode === "00"){
+                  echo 'Charge Complete... use this to verify:  '. $load->data->txRef;
+              } elseif ($load->data->chargeResponseCode === "02"&& $load->data->authModelUsed === 'PIN') {
+                  $flow = $this->validateCharge($load->data->flwRef,'12345');
+
+                   sleep(3);
+                   $flowy = json_decode($flow);
+                   if($flowy->status === "success"){
+                        $can = $this->verifyCharge($flowy->data->tx->txRef);
+
+                        echo $can;
+                   }
+
+              } elseif($load->data->chargeResponseCode === "02" && $load->data->authModelUsed === 'VBVSECURECODE'){
+                  echo 'Load this url '.$load->data->authurl.' to verify!';
+              } elseif($load->data->chargeResponseCode === "02" && $load->data->authModelUsed === 'ACCESS_OTP') {
+                  print_r($load->data->chargeResponseMessage);
+              } else {
+                  var_dump($load);
+              }
+        } else {
+            echo 'Sorry we cant process your card, please try again with another card';
+        }
     }
 
     /**
@@ -74,6 +127,7 @@ class Raver extends Executor
 
     public function testApi()
     {
+        echo "Yes, am working";
     }
 }
 ?>
