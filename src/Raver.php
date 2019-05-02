@@ -41,7 +41,7 @@ class Raver extends Executor
     }
 
     /**
-     * Inititate payment process for a card
+     * Inititate payment process for a card.
      *
      * @param array $data
      * @return json payload
