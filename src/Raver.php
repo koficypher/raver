@@ -51,19 +51,19 @@ class Raver extends Executor
         $url = '/flwv3-pug/getpaidx/api/charge';
         //prepare data
         $options = $this->prepareData($data);
-        
+
         //post data
         $response = $this->postCharge($options, $url);
-        
+
         //assign response to the global scope
         $this->res = $response;
-        
+
         return  $this->getStep($response, $data);
         //return $this;
     }
 
     /**
-     * Simulated step of the various stages in a card transaction
+     * Simulated step of the various stages in a card transaction.
      *
      * @param json $response from the initiateCard method
      * @param array $data - from the initiateCard method
@@ -71,43 +71,41 @@ class Raver extends Executor
      */
     public function getStep($response, $data)
     {
-        $load = $response != null ? json_decode($response): exit('empty response');
-         //var_dump($data->message);
-        if($load->status === "success" && $load->message === "AUTH_SUGGESTION"){
-             if($load->data->suggested_auth === 'PIN'){
+        $load = $response != null ? json_decode($response) : exit('empty response');
+        //var_dump($data->message);
+        if ($load->status === 'success' && $load->message === 'AUTH_SUGGESTION') {
+            if ($load->data->suggested_auth === 'PIN') {
+                $data['suggested_auth'] = 'pin';
 
-                    $data['suggested_auth'] = 'pin';
+                $this->initiateCardPayment($data);
+            } elseif ($load->data->suggested_auth === 'NOAUTH_INTERNATIONAL') {
+                echo 'Do nothing';
+            } elseif ($load->data->suggested_auth === 'AVS_VBVSECURECODE') {
+                echo 'Add Address Details';
+            }
+        } elseif ($load->status === 'success' && $load->message === 'V-COMP') {
+            // code...
+            if ($load->data->chargeResponseCode === '00') {
+               // echo 'Charge Complete... use this to verify:  '.$load->data->txRef;
+               $verif = $this->verifyCharge($load->data->txRef);
+               echo $verif;
+            } elseif ($load->data->chargeResponseCode === '02' && $load->data->authModelUsed === 'PIN') {
+                $flow = $this->validateCharge($load->data->flwRef, '12345');
 
-                    $this->initiateCardPayment($data);
-             }elseif ($load->data->suggested_auth === 'NOAUTH_INTERNATIONAL'){
-                   echo 'Do nothing';
-             }elseif ($load->data->suggested_auth === 'AVS_VBVSECURECODE'){
-                 echo 'Add Address Details';
-             }
-        }elseif ($load->status === "success" && $load->message === "V-COMP") {
-            # code...
-              if($load->data->chargeResponseCode === "00"){
-                  $verif = $this->verifyCharge($load->data->txRef);
-                  echo $verif;
-                  //echo 'Charge Complete... use this to verify:  '. $load->data->txRef;
-              } elseif ($load->data->chargeResponseCode === "02"&& $load->data->authModelUsed === 'PIN') {
-                  $flow = $this->validateCharge($load->data->flwRef,'12345');
+                sleep(3);
+                $flowy = json_decode($flow);
+                if ($flowy->status === 'success') {
+                    $can = $this->verifyCharge($flowy->data->tx->txRef);
 
-                   sleep(3);
-                   $flowy = json_decode($flow);
-                   if($flowy->status === "success"){
-                        $can = $this->verifyCharge($flowy->data->tx->txRef);
-
-                        echo $can;
-                   }
-
-              } elseif($load->data->chargeResponseCode === "02" && $load->data->authModelUsed === 'VBVSECURECODE'){
-                  echo 'Load this url '.$load->data->authurl.' to verify!';
-              } elseif($load->data->chargeResponseCode === "02" && $load->data->authModelUsed === 'ACCESS_OTP') {
-                  print_r($load->data->chargeResponseMessage);
-              } else {
-                  var_dump($load);
-              }
+                    echo $can;
+                }
+            } elseif ($load->data->chargeResponseCode === '02' && $load->data->authModelUsed === 'VBVSECURECODE') {
+                echo 'Load this url '.$load->data->authurl.' to verify!';
+            } elseif ($load->data->chargeResponseCode === '02' && $load->data->authModelUsed === 'ACCESS_OTP') {
+                print_r($load->data->chargeResponseMessage);
+            } else {
+                var_dump($load);
+            }
         } else {
             echo 'Sorry we cant process your card, please try again with another card';
         }
@@ -129,7 +127,7 @@ class Raver extends Executor
 
     public function testApi()
     {
-        echo "Yes, am working";
+        echo 'Yes, am working';
     }
 }
 ?>
