@@ -55,7 +55,6 @@ class Raver extends Executor
 
         //return json response
         return  $this->getCardStep($response, $data);
-        
     }
 
     /**
@@ -109,7 +108,7 @@ class Raver extends Executor
 
     /**
      * @param array $data momo payment details
-     * 
+     *
      * @return json payload
      */
     public function initiateMomoPayment($data)
@@ -128,24 +127,22 @@ class Raver extends Executor
 
     /**
      * @param json $reponse response from initiateMomoCharge method
-     * 
+     *
      * @return json payload
      */
-
-     public function getMomoStep($response)
-     {
+    public function getMomoStep($response)
+    {
         $load = $response != null ? json_decode($response) : exit('empty response');
 
-        if ($load->status === 'success' && $load->message === 'V-COMP'){
-
+        if ($load->status === 'success' && $load->message === 'V-COMP') {
             sleep(2);
 
             $verif = $this->verifyCharge($load->data->txRef);
             echo $verif;
         } else {
-            echo "Sorry mobile money request could not be completed";
+            echo 'Sorry mobile money request could not be completed';
         }
-     }
+    }
 
     /**
      * Encrypts payload.
