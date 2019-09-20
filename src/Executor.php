@@ -16,6 +16,8 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Client;
 use Raver\Config\Config;
 use GuzzleHttp\Exception\TransferException;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class Executor
 {
@@ -25,22 +27,29 @@ class Executor
 
     public $config_vars;
 
+    public $logger;
+
+    protected $charge_url = '/flwv3-pug/getpaidx/api/charge';
+
     public function __construct()
     {
         $this->config = new Config();
+        $this->logger = new Logger('RaverLogs');
+        $this->logger->pushHandler(new StreamHandler(__DIR__.'../../logs/raver.log', Logger::DEBUG));
         $this->config_vars = $this->config->getEnvVars();
         $this->client = $this->config_vars['production_flag'] === true ? new Client(['base_uri' => 'https://api.ravepay.co', 'headers' => ['content-type' => 'application/json']]) : new Client(['base_uri' => 'https://ravesandboxapi.flutterwave.com', 'headers' => ['content-type' => 'application/json']]);
     }
 
-    public function postCharge($data, $url)
+    protected function postCharge($data, $url)
     {
         try {
             $res = $this->client->request('POST', $url, ['json' => $data]);
 
             return $res->getBody();
         } catch (TransferException $e) {
-            echo Psr7\str($e->getRequest());
-            echo Psr7\str($e->getResponse());
+            $response = $e->getResponse();
+            $this->logger->error('An error occurred during the transaction', array("request" => Psr7\str($e->getRequest()), "response" => Psr7\str($e->getResponse()) ));
+            echo $response->getBody();
         }
     }
 
@@ -51,7 +60,7 @@ class Executor
      * @param string $otp - one time code/pin sent to you via mail or mobile
      * @return json payload on successful transaction and error message on error
      */
-    public function validateCharge($flw_ref, $otp)
+    protected function validateCharge($flw_ref, $otp)
     {
         $url = '/flwv3-pug/getpaidx/api/validatecharge';
         try {
@@ -59,8 +68,9 @@ class Executor
 
             return $res->getBody();
         } catch (TransferException $e) {
-            echo Psr7\str($e->getRequest());
-            echo Psr7\str($e->getResponse());
+            $response = $e->getResponse();
+            $this->logger->error('An error occurred trying to validate the charge', array("request" => Psr7\str($e->getRequest()), "response" => Psr7\str($e->getResponse()) ));
+            echo $response->getBody();
         }
     }
 
@@ -70,7 +80,7 @@ class Executor
      * @param string $tx_ref
      * @return json payload on successful transaction and error message on error
      */
-    public function verifyCharge($tx_ref)
+    protected function verifyCharge($tx_ref)
     {
         $url = '/flwv3-pug/getpaidx/api/v2/verify';
         try {
@@ -78,8 +88,73 @@ class Executor
 
             return $res->getBody();
         } catch (TransferException $e) {
-            echo Psr7\str($e->getRequest());
-            echo Psr7\str($e->getResponse());
+            $response = $e->getResponse();
+            $this->logger->error('An error occurred trying to verify the charge', array("request" => Psr7\str($e->getRequest()), "response" => Psr7\str($e->getResponse()) ));
+            echo $response->getBody();
+        }
+    }
+
+    /** 
+     * refunds a charge to the customer, only successful rave transactions can be refunded
+     * 
+     * @param string $reference flwref returned from successfull transaction
+     * @param string $amount amount to be refunded
+     * 
+     * @return json a json payload telling the state of the refund
+     */
+    public function refundCharge($reference,$amount)
+    {
+       $url = 'gpx/merchant/transactions/refund';
+       
+       try {
+        $res = $this->client->request('POST', $url, ['json' => ['ref'=>$reference, 'seckey' =>$this->config_vars['secret_key'], 'amount' => $amount]]);
+
+        return $res->getBody();
+
+       } catch (TransferException $e) {
+        $response = $e->getResponse();
+        $this->logger->error('An error occurred trying to refund the charge', array("request" => Psr7\str($e->getRequest()), "response" => Psr7\str($e->getResponse()) ));
+        echo $response->getBody();
+       }
+    }
+
+    /**
+     * Performs a generic get request on the rave api
+     *
+     * @param [string] $url
+     * @param [array] $parameters
+     * @return json payload
+     */
+    public function getRaveRequest($url,$parameters)
+    {
+       try {
+        $res = $this->client->request('GET', $url, ['query' => $parameters]);
+
+        return $res->getBody();
+
+       } catch (TransferException $e) {
+        $response = $e->getResponse();
+        $this->logger->error('An error occurred trying to perform the get request', array("request" => Psr7\str($e->getRequest()), "response" => Psr7\str($e->getResponse()) ));
+        echo $response->getBody();
+       }
+    }
+
+    /**
+     * Performs a generic post request on the rave api
+     *
+     * @param [string] $url
+     * @param [array] $data
+     * @return json payload
+     */
+    public function postRaveRequest($url, $data)
+    {
+        try {
+            $res = $this->client->request('POST', $url, ['json' => $data ]);
+            return $res->getBody();
+        } catch (TransferException $e) {
+            $response = $e->getResponse();
+            $this->logger->error('An error occurred trying to perform the post request', array("request" => Psr7\str($e->getRequest()), "response" => Psr7\str($e->getResponse()) ));
+            echo $response->getBody();
         }
     }
 }

@@ -3,3 +3,6 @@
 node_modules
 composer.lock
 index.php
+logs/*.log
+.phpunit.*
+phpunit.*

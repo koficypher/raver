@@ -8,8 +8,6 @@ class Raver extends Executor
 {
     public $helper;
 
-    public $res;
-
     public function __construct()
     {
         parent::__construct();
@@ -28,7 +26,7 @@ class Raver extends Executor
         $new_data = is_array($data) ? json_encode($data) : exit('requires an array');
 
         //encrypts the card data with the key
-        $new_data_final = $this->encryptCard($new_data);
+        $new_data_final = $this->encryptData($new_data);
 
         //prepares data into the right format
         $postdata = [
@@ -36,7 +34,7 @@ class Raver extends Executor
           'client'    => $new_data_final,
           'alg'       => '3DES-24', ];
 
-        //returns json encoded data
+        //returns an array of the prepared data
         return $postdata;
     }
 
@@ -48,28 +46,26 @@ class Raver extends Executor
      */
     public function initiateCardPayment($data)
     {
-        $url = '/flwv3-pug/getpaidx/api/charge';
+        $url = $this->charge_url;
         //prepare data
         $options = $this->prepareData($data);
 
         //post data
         $response = $this->postCharge($options, $url);
 
-        //assign response to the global scope
-        $this->res = $response;
-
-        return  $this->getStep($response, $data);
-        //return $this;
+        //return json response
+        return  $this->getCardStep($response, $data);
+        
     }
 
     /**
      * Simulated step of the various stages in a card transaction.
      *
-     * @param json $response from the initiateCard method
-     * @param array $data - from the initiateCard method
+     * @param json $response from the initiateCardPayment method
+     * @param array $data - from the initiateCardData method
      * @return void
      */
-    public function getStep($response, $data)
+    public function getCardStep($response, $data)
     {
         $load = $response != null ? json_decode($response) : exit('empty response');
         //var_dump($data->message);
@@ -112,12 +108,52 @@ class Raver extends Executor
     }
 
     /**
-     * Encrypts card data.
+     * @param array $data momo payment details
+     * 
+     * @return json payload
+     */
+    public function initiateMomoPayment($data)
+    {
+        $url = $this->charge_url;
+
+        //prepare data
+        $options = $this->prepareData($data);
+
+        //post data
+        $response = $this->postCharge($options, $url);
+
+        //return json response
+        return  $this->getMomoStep($response);
+    }
+
+    /**
+     * @param json $reponse response from initiateMomoCharge method
+     * 
+     * @return json payload
+     */
+
+     public function getMomoStep($response)
+     {
+        $load = $response != null ? json_decode($response) : exit('empty response');
+
+        if ($load->status === 'success' && $load->message === 'V-COMP'){
+
+            sleep(2);
+
+            $verif = $this->verifyCharge($load->data->txRef);
+            echo $verif;
+        } else {
+            echo "Sorry mobile money request could not be completed";
+        }
+     }
+
+    /**
+     * Encrypts payload.
      *
      * @param object $data
      * @return string
      */
-    public function encryptCard($data)
+    public function encryptData($data)
     {
         //get key from helper class
         $key = $this->helper->getKey();

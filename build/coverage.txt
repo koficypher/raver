@@ -1,0 +1,12 @@
+
+
+Code Coverage Report:    
+  2019-09-20 11:43:28    
+                         
+ Summary:                
+  Classes: 25.00% (1/4)  
+  Methods: 11.11% (2/18) 
+  Lines:    4.14% (6/145)
+
+\Raver\Config::Raver\Config\Config
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  6/  6)
