@@ -82,9 +82,9 @@ class Raver extends Executor
         } elseif ($load->status === 'success' && $load->message === 'V-COMP') {
             // code...
             if ($load->data->chargeResponseCode === '00') {
-               // echo 'Charge Complete... use this to verify:  '.$load->data->txRef;
-               $verif = $this->verifyCharge($load->data->txRef);
-               echo $verif;
+                // echo 'Charge Complete... use this to verify:  '.$load->data->txRef;
+                $verif = $this->verifyCharge($load->data->txRef);
+                echo $verif;
             } elseif ($load->data->chargeResponseCode === '02' && $load->data->authModelUsed === 'PIN') {
                 $flow = $this->validateCharge($load->data->flwRef, '12345');
 
