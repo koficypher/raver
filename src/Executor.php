@@ -12,12 +12,12 @@
 
 namespace Raver;
 
-use Monolog\Logger;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Client;
-use Raver\Config\Config;
-use Monolog\Handler\StreamHandler;
 use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Psr7;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Raver\Config\Config;
 
 class Executor
 {
@@ -49,6 +49,7 @@ class Executor
         } catch (TransferException $e) {
             $response = $e->getResponse();
             $this->logger->error('An error occurred during the transaction', ['request' => Psr7\str($e->getRequest()), 'response' => Psr7\str($e->getResponse())]);
+
             return $response->getBody();
         }
     }
@@ -70,6 +71,7 @@ class Executor
         } catch (TransferException $e) {
             $response = $e->getResponse();
             $this->logger->error('An error occurred trying to validate the charge', ['request' => Psr7\str($e->getRequest()), 'response' => Psr7\str($e->getResponse())]);
+
             return $response->getBody();
         }
     }
@@ -90,6 +92,7 @@ class Executor
         } catch (TransferException $e) {
             $response = $e->getResponse();
             $this->logger->error('An error occurred trying to verify the charge', ['request' => Psr7\str($e->getRequest()), 'response' => Psr7\str($e->getResponse())]);
+
             return $response->getBody();
         }
     }
@@ -113,6 +116,7 @@ class Executor
         } catch (TransferException $e) {
             $response = $e->getResponse();
             $this->logger->error('An error occurred trying to refund the charge', ['request' => Psr7\str($e->getRequest()), 'response' => Psr7\str($e->getResponse())]);
+
             return $response->getBody();
         }
     }
@@ -133,6 +137,7 @@ class Executor
         } catch (TransferException $e) {
             $response = $e->getResponse();
             $this->logger->error('An error occurred trying to perform the get request', ['request' => Psr7\str($e->getRequest()), 'response' => Psr7\str($e->getResponse())]);
+
             return $response->getBody();
         }
     }
@@ -153,6 +158,7 @@ class Executor
         } catch (TransferException $e) {
             $response = $e->getResponse();
             $this->logger->error('An error occurred trying to perform the post request', ['request' => Psr7\str($e->getRequest()), 'response' => Psr7\str($e->getResponse())]);
+
             return $response->getBody();
         }
     }

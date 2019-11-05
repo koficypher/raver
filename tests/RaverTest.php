@@ -12,9 +12,9 @@
 
 namespace Tests;
 
+use PHPUnit\Framework\TestCase;
 use Raver\Config\Config;
 use Raver\Raver;
-use PHPUnit\Framework\TestCase;
 
 class RaverTest extends TestCase
 {
