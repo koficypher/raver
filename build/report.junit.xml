@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Raver Testsuite" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="0.220267">
-    <testsuite name="Tests\RaverTest" file="C:\Users\skfefeti\Projects\libs\raver\tests\RaverTest.php" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="0.220267">
-      <testcase name="testTruthy" class="Tests\RaverTest" classname="Tests.RaverTest" file="C:\Users\skfefeti\Projects\libs\raver\tests\RaverTest.php" line="21" assertions="1" time="0.029313"/>
-      <testcase name="testApi" class="Tests\RaverTest" classname="Tests.RaverTest" file="C:\Users\skfefeti\Projects\libs\raver\tests\RaverTest.php" line="26" assertions="1" time="0.169388">
+  <testsuite name="Raver Testsuite" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="0.233082">
+    <testsuite name="Tests\RaverTest" file="C:\Users\skfefeti\Projects\libs\raver\tests\RaverTest.php" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="0.233082">
+      <testcase name="testTruthy" class="Tests\RaverTest" classname="Tests.RaverTest" file="C:\Users\skfefeti\Projects\libs\raver\tests\RaverTest.php" line="21" assertions="1" time="0.028938"/>
+      <testcase name="testApi" class="Tests\RaverTest" classname="Tests.RaverTest" file="C:\Users\skfefeti\Projects\libs\raver\tests\RaverTest.php" line="26" assertions="1" time="0.177901">
         <system-out>&#13;
 </system-out>
       </testcase>
-      <testcase name="testPrepareData" class="Tests\RaverTest" classname="Tests.RaverTest" file="C:\Users\skfefeti\Projects\libs\raver\tests\RaverTest.php" line="33" assertions="1" time="0.021566"/>
+      <testcase name="testPrepareData" class="Tests\RaverTest" classname="Tests.RaverTest" file="C:\Users\skfefeti\Projects\libs\raver\tests\RaverTest.php" line="33" assertions="1" time="0.026243"/>
     </testsuite>
   </testsuite>
 </testsuites>
