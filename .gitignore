@@ -6,3 +6,4 @@ index.php
 logs/*.log
 .phpunit.*
 phpunit.*
+build/coverage.txt

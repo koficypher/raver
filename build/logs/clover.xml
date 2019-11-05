@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1572967879">
-  <project timestamp="1572967879">
+<coverage generated="1572971989">
+  <project timestamp="1572971989">
     <package name="Raver\Config">
       <file name="C:\Users\skfefeti\Projects\libs\raver\src\Config\Config.php">
         <class name="Raver\Config\Config" namespace="Raver\Config">
