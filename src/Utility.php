@@ -13,7 +13,6 @@
 namespace Raver;
 
 use Raver\Helpers\Helper;
-use Raver\Utility; 
 
 class Utility extends Executor
 {
@@ -23,7 +22,6 @@ class Utility extends Executor
     {
         parent::__construct();
         $this->helper = new Helper();
-
     }
 
     /**
@@ -43,7 +41,7 @@ class Utility extends Executor
     }
 
     /**
-     * Gets a list of transactions on your rave account
+     * Gets a list of transactions on your rave account.
      *
      * @param [date] $start
      * @param [date] $end
