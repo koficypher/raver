@@ -13,6 +13,7 @@
 namespace Tests;
 
 use Raver\Config\Config;
+use Raver\Raver;
 use PHPUnit\Framework\TestCase;
 
 class RaverTest extends TestCase
@@ -20,6 +21,13 @@ class RaverTest extends TestCase
     public function testTruthy()
     {
         $this->assertTrue(true);
+    }
+
+    public function testApi()
+    {
+        $raver = new Raver();
+        $text = $raver->testApi();
+        $this->assertSame('Yes, am working', $text);
     }
 
     public function testPrepareData()

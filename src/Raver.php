@@ -7,11 +7,13 @@ use Raver\Helpers\Helper;
 class Raver extends Executor
 {
     public $helper;
+    public $utility;
 
     public function __construct()
     {
         parent::__construct();
         $this->helper = new Helper();
+        $this->utility = new Utility();
     }
 
     /**
@@ -74,16 +76,16 @@ class Raver extends Executor
 
                 $this->initiateCardPayment($data);
             } elseif ($load->data->suggested_auth === 'NOAUTH_INTERNATIONAL') {
-                echo 'Do nothing';
+                return 'Do nothing';
             } elseif ($load->data->suggested_auth === 'AVS_VBVSECURECODE') {
-                echo 'Add Address Details';
+                return 'Add Address Details';
             }
         } elseif ($load->status === 'success' && $load->message === 'V-COMP') {
             // code...
             if ($load->data->chargeResponseCode === '00') {
                 // echo 'Charge Complete... use this to verify:  '.$load->data->txRef;
                 $verif = $this->verifyCharge($load->data->txRef);
-                echo $verif;
+                return $verif;
             } elseif ($load->data->chargeResponseCode === '02' && $load->data->authModelUsed === 'PIN') {
                 $flow = $this->validateCharge($load->data->flwRef, '12345');
 
@@ -92,17 +94,17 @@ class Raver extends Executor
                 if ($flowy->status === 'success') {
                     $can = $this->verifyCharge($flowy->data->tx->txRef);
 
-                    echo $can;
+                    return $can;
                 }
             } elseif ($load->data->chargeResponseCode === '02' && $load->data->authModelUsed === 'VBVSECURECODE') {
-                echo 'Load this url '.$load->data->authurl.' to verify!';
+                return 'Load this url '.$load->data->authurl.' to verify!';
             } elseif ($load->data->chargeResponseCode === '02' && $load->data->authModelUsed === 'ACCESS_OTP') {
-                print_r($load->data->chargeResponseMessage);
+                return $load->data->chargeResponseMessage;
             } else {
-                var_dump($load);
+                return $load;
             }
         } else {
-            echo 'Sorry we cant process your card, please try again with another card';
+            return 'Sorry we cant process your card, please try again with another card';
         }
     }
 
@@ -138,9 +140,9 @@ class Raver extends Executor
             sleep(2);
 
             $verif = $this->verifyCharge($load->data->txRef);
-            echo $verif;
+            return $verif;
         } else {
-            echo 'Sorry mobile money request could not be completed';
+            return 'Sorry mobile money request could not be completed';
         }
     }
 
@@ -160,7 +162,7 @@ class Raver extends Executor
 
     public function testApi()
     {
-        echo 'Yes, am working';
+        return 'Yes, am working';
     }
 }
 ?>

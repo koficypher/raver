@@ -13,6 +13,7 @@
 namespace Raver;
 
 use Raver\Helpers\Helper;
+use Raver\Utility; 
 
 class Utility extends Executor
 {
@@ -22,6 +23,7 @@ class Utility extends Executor
     {
         parent::__construct();
         $this->helper = new Helper();
+
     }
 
     /**
@@ -37,9 +39,17 @@ class Utility extends Executor
 
         $res = $this->getRaveRequest($url, $param);
 
-        echo $res;
+        return $res;
     }
 
+    /**
+     * Gets a list of transactions on your rave account
+     *
+     * @param [date] $start
+     * @param [date] $end
+     * @param [string] $status
+     * @return object
+     */
     public function listTransactions($start, $end, $status)
     {
         $url = 'v2/gpx/transactions/query';
@@ -51,6 +61,6 @@ class Utility extends Executor
 
         $res = $this->postRaveRequest($url, $data);
 
-        echo $res;
+        return $res;
     }
 }
