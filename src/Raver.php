@@ -85,6 +85,7 @@ class Raver extends Executor
             if ($load->data->chargeResponseCode === '00') {
                 // echo 'Charge Complete... use this to verify:  '.$load->data->txRef;
                 $verif = $this->verifyCharge($load->data->txRef);
+
                 return $verif;
             } elseif ($load->data->chargeResponseCode === '02' && $load->data->authModelUsed === 'PIN') {
                 $flow = $this->validateCharge($load->data->flwRef, '12345');
@@ -140,6 +141,7 @@ class Raver extends Executor
             sleep(2);
 
             $verif = $this->verifyCharge($load->data->txRef);
+
             return $verif;
         } else {
             return 'Sorry mobile money request could not be completed';
