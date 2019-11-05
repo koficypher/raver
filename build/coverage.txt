@@ -1,19 +1,19 @@
 
 
 Code Coverage Report:     
-  2019-11-05 15:23:11     
+  2019-11-05 15:51:15     
                           
  Summary:                 
   Classes: 20.00% (1/5)   
   Methods: 26.92% (7/26)  
-  Lines:   15.23% (23/151)
+  Lines:   15.44% (23/149)
 
 \Raver::Raver\Executor
   Methods:  14.29% ( 1/ 7)   Lines:  13.33% (  6/ 45)
 \Raver::Raver\Raver
   Methods:  25.00% ( 2/ 8)   Lines:   9.26% (  5/ 54)
 \Raver::Raver\Utility
-  Methods:  33.33% ( 1/ 3)   Lines:  17.65% (  3/ 17)
+  Methods:  33.33% ( 1/ 3)   Lines:  20.00% (  3/ 15)
 \Raver\Config::Raver\Config\Config
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  6/  6)
 \Raver\Helpers::Raver\Helpers\Helper

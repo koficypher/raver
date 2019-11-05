@@ -164,7 +164,7 @@ class Raver extends Executor
 
     public function testApi()
     {
-        return 'Yes, am working';
+        return 'Yes, am working now';
     }
 }
 ?>

@@ -27,7 +27,7 @@ class RaverTest extends TestCase
     {
         $raver = new Raver();
         $text = $raver->testApi();
-        $this->assertSame('Yes, am working', $text);
+        $this->assertSame('Yes, am working now', $text);
     }
 
     public function testPrepareData()
