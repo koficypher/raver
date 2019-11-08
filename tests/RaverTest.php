@@ -10,7 +10,7 @@
  * Kofi Cypher <skcypher6@gmail.com>
  */
 
-namespace Tests;
+namespace Raver\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Raver\Config\Config;
