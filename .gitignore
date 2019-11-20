@@ -1,7 +1,7 @@
 /vendor/
 .env
 node_modules
-composer.lock
+test.js
 index.php
 logs/*.log
 .phpunit.*
