@@ -1,5 +1,5 @@
 # raver
-https://github.com/koficypher/raver/workflows/Raver/badge.svg
+![Raver](https://github.com/koficypher/raver/workflows/Raver/badge.svg)
 
 Unofficial Rave SDK for PHP
 
