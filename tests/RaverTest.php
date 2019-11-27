@@ -13,7 +13,6 @@
 namespace Raver\Tests;
 
 use PHPUnit\Framework\TestCase;
-
 use Raver\Executor;
 
 class RaverTest extends TestCase
@@ -25,8 +24,8 @@ class RaverTest extends TestCase
 
     public function testExecutorInstance()
     {
-      $executor  = new Executor();
+        $executor = new Executor();
 
-      $this->assertInstanceOf(Executor::class, $executor);
+        $this->assertInstanceOf(Executor::class, $executor);
     }
 }
