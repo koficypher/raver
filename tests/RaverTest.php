@@ -23,10 +23,10 @@ class RaverTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testExecutorInstance()
-    {
-      $executor  = new Executor();
+    // public function testExecutorInstance()
+    // {
+    //   $executor  = new Executor();
 
-      $this->assertInstanceOf(Executor::class, $executor);
-    }
+    //   $this->assertInstanceOf(Executor::class, $executor);
+    // }
 }
