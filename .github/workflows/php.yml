@@ -18,6 +18,10 @@ jobs:
       
     - name: Run test suite
       run: composer run-script test
+      env:
+        PRODUCTION_FLAG: ${{secrets.PRODUCTION_FLAG}}
+        PUBLIC_KEY: ${{secrets.PUBLIC_KEY}}
+        SECRET_KEY: ${{secrets.SECRET_KEY}}
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
