@@ -126,7 +126,7 @@ class Helper
     }
 
     /**
-     * Returns a list of urls for the entire library
+     * Returns a list of urls for the entire library.
      *
      * @return array
      */
@@ -139,7 +139,7 @@ class Helper
           'validate-charge' => '/flwv3-pug/getpaidx/api/validatecharge',
           'verify-charge' => '/flwv3-pug/getpaidx/api/v2/verify',
           'refund' => 'gpx/merchant/transactions/refund',
-          'token-charge' => 'flwv3-pug/getpaidx/api/tokenized/charge'
+          'token-charge' => 'flwv3-pug/getpaidx/api/tokenized/charge',
         ];
     }
 }

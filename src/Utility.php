@@ -26,7 +26,6 @@ class Utility extends Executor
         $this->helper = new Helper();
     }
 
-
     /**
      * Get lists of banks for transfers in Ghana.
      *
