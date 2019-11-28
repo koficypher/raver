@@ -18,11 +18,14 @@ class Utility extends Executor
 {
     public $helper;
 
+    public $urls = [];
+
     public function __construct()
     {
         parent::__construct();
         $this->helper = new Helper();
     }
+
 
     /**
      * Get lists of banks for transfers in Ghana.

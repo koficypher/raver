@@ -124,4 +124,22 @@ class Helper
 
         return $finalHash;
     }
+
+    /**
+     * Returns a list of urls for the entire library
+     *
+     * @return array
+     */
+    public function getUrls()
+    {
+        return [
+          'charge' => '/flwv3-pug/getpaidx/api/charge',
+          'banks' => 'v2/banks/GH',
+          'list-transactions' => 'v2/gpx/transactions/query',
+          'validate-charge' => '/flwv3-pug/getpaidx/api/validatecharge',
+          'verify-charge' => '/flwv3-pug/getpaidx/api/v2/verify',
+          'refund' => 'gpx/merchant/transactions/refund',
+          'token-charge' => 'flwv3-pug/getpaidx/api/tokenized/charge'
+        ];
+    }
 }
