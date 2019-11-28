@@ -1,30 +1,39 @@
-<?php 
+<?php
+
+/*
+ * Raver - Unofficial Rave PHP SDK
+ *
+ * Copyright - 2019
+ *
+ * MIT
+ *
+ * Kofi Cypher <skcypher6@gmail.com>
+ */
 
 namespace Raver;
 
-use Raver\Executor;
 use Raver\Config\Config;
 use Raver\Helpers\Helper;
 
-class TokenCharge extends Executor {
-
+class TokenCharge extends Executor
+{
     public $helper;
 
     public function __construct()
     {
-      $this->helper = new Helper();
-      $this->config = new Config();
-      $this->config_vars = $this->config->getEnvVars();
+        $this->helper = new Helper();
+        $this->config = new Config();
+        $this->config_vars = $this->config->getEnvVars();
     }
 
     /**
-     * Function to perform a tokenized charge
+     * Function to perform a tokenized charge.
      *
      * @param string $token
      * @param array $data
      * @return json payload
      */
-    public function charge($token,$data)
+    public function charge($token, $data)
     {
         is_array($data) ? $data['token'] = $token : exit('Data needs to be an array');
 
@@ -34,21 +43,18 @@ class TokenCharge extends Executor {
 
         $url = $this->helper->getUrls()['token-charge'];
 
-        return $this->postRaveRequest($url,$data);
+        return $this->postRaveRequest($url, $data);
     }
 
-    
     /**
-     * Updates an email address associated with a token
+     * Updates an email address associated with a token.
      *
      * @param string $email
      * @param string $token
      * @param array $data - optional
      * @return json payload
      */
-    public function updateEmail($email,$token,$data = null)
+    public function updateEmail($email, $token, $data = null)
     {
-       
     }
-
 }
