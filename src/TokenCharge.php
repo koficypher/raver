@@ -56,29 +56,26 @@ class TokenCharge extends Executor
      */
     public function updateEmail($email, $token, $data = null)
     {
-      //prepare url
-       $url = 'v2/gpx/tokens/'.$token.'/update_customer';
+        //prepare url
+        $url = 'v2/gpx/tokens/'.$token.'/update_customer';
 
-       //get secret key
-       $seckey = $this->config_vars['secret_key'];
+        //get secret key
+        $seckey = $this->config_vars['secret_key'];
 
-       //check data format and presence
-       if($data) {
-            if(is_array($data)){
-              $data['token'] = $token;
-              $data['secret_key'] = $seckey;
+        //check data format and presence
+        if ($data) {
+            if (is_array($data)) {
+                $data['token'] = $token;
+                $data['secret_key'] = $seckey;
             } else {
-              exit('Data needs to be an array');
+                exit('Data needs to be an array');
             }
-       } else {
+        } else {
+            $load = ['email' => $email, 'secret_key' => $seckey];
+        }
 
-         $load = ['email' => $email,'secret_key' => $seckey];
-       }
+        $response = $this->postRaveRequest($url, $data);
 
-
-
-       $response = $this->postRaveRequest($url,$data);
-
-       return $response;
+        return $response;
     }
 }
