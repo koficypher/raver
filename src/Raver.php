@@ -163,7 +163,7 @@ class Raver extends Executor
     }
 
     /**
-     * Performs a refund
+     * Performs a refund.
      * @param string $amount - amount to refund
      * @param string $txref - transaction reference (this is the flwRef returned in the charge response)
      * @return object $response -  a stringified json payload
