@@ -162,6 +162,17 @@ class Raver extends Executor
         return $this->helper->encrypt3DES($data, $key);
     }
 
+    /**
+     * Performs a refund
+     * @param string $amount - amount to refund
+     * @param string $txref - transaction reference (this is the flwRef returned in the charge response)
+     * @return object $response -  a stringified json payload
+     */
+    public function refund($amount, $txref)
+    {
+        return $this->refundCharge($txref, $amount);
+    }
+
     public function testApi()
     {
         return 'Yes, am working now';
