@@ -133,13 +133,13 @@ class Helper
     public function getUrls()
     {
         return [
-          'charge' => '/flwv3-pug/getpaidx/api/charge',
-          'banks' => 'v2/banks/GH',
-          'list-transactions' => 'v2/gpx/transactions/query',
-          'validate-charge' => '/flwv3-pug/getpaidx/api/validatecharge',
-          'verify-charge' => '/flwv3-pug/getpaidx/api/v2/verify',
-          'refund' => 'gpx/merchant/transactions/refund',
-          'token-charge' => 'flwv3-pug/getpaidx/api/tokenized/charge',
+            'charge' => '/flwv3-pug/getpaidx/api/charge',
+            'banks' => 'v2/banks/GH',
+            'list-transactions' => 'v2/gpx/transactions/query',
+            'validate-charge' => '/flwv3-pug/getpaidx/api/validatecharge',
+            'verify-charge' => '/flwv3-pug/getpaidx/api/v2/verify',
+            'refund' => 'gpx/merchant/transactions/refund',
+            'token-charge' => 'flwv3-pug/getpaidx/api/tokenized/charge',
         ];
     }
 }

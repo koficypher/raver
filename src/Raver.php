@@ -32,9 +32,9 @@ class Raver extends Executor
 
         //prepares data into the right format
         $postdata = [
-          'PBFPubKey' => $this->config_vars['public_key'],
-          'client'    => $new_data_final,
-          'alg'       => '3DES-24', ];
+            'PBFPubKey' => $this->config_vars['public_key'],
+            'client'    => $new_data_final,
+            'alg'       => '3DES-24', ];
 
         //returns an array of the prepared data
         return $postdata;
