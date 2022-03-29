@@ -57,8 +57,8 @@ class Executor
     /**
      * Validates a card charge transaction.
      *
-     * @param string $flw_ref - transaction flow reference from initiate charge response
-     * @param string $otp - one time code/pin sent to you via mail or mobile
+     * @param  string  $flw_ref  - transaction flow reference from initiate charge response
+     * @param  string  $otp  - one time code/pin sent to you via mail or mobile
      * @return json payload on successful transaction and error message on error
      */
     protected function validateCharge($flw_ref, $otp)
@@ -79,7 +79,7 @@ class Executor
     /**
      * Verifies the state of a charge.
      *
-     * @param string $tx_ref
+     * @param  string  $tx_ref
      * @return json payload on successful transaction and error message on error
      */
     protected function verifyCharge($tx_ref)
@@ -100,9 +100,8 @@ class Executor
     /**
      * refunds a charge to the customer, only successful rave transactions can be refunded.
      *
-     * @param string $reference flwref returned from successfull transaction
-     * @param string $amount amount to be refunded
-     *
+     * @param  string  $reference  flwref returned from successfull transaction
+     * @param  string  $amount  amount to be refunded
      * @return json a json payload telling the state of the refund
      */
     public function refundCharge($reference, $amount)
