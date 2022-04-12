@@ -19,7 +19,7 @@ class Raver extends Executor
     /**
      * Json encode's and encrypts data into the required format.
      *
-     * @param array $data
+     * @param  array  $data
      * @return array payload
      */
     public function prepareData($data)
@@ -43,7 +43,7 @@ class Raver extends Executor
     /**
      * Inititate payment process for a card.
      *
-     * @param array $data
+     * @param  array  $data
      * @return json payload
      */
     public function initiateCardPayment($data)
@@ -62,8 +62,8 @@ class Raver extends Executor
     /**
      * Simulated step of the various stages in a card transaction.
      *
-     * @param json $response from the initiateCardPayment method
-     * @param array $data - from the initiateCardData method
+     * @param  json  $response  from the initiateCardPayment method
+     * @param  array  $data  - from the initiateCardData method
      * @return void
      */
     public function getCardStep($response, $data)
@@ -110,8 +110,7 @@ class Raver extends Executor
     }
 
     /**
-     * @param array $data momo payment details
-     *
+     * @param  array  $data  momo payment details
      * @return json payload
      */
     public function initiateMomoPayment($data)
@@ -129,8 +128,7 @@ class Raver extends Executor
     }
 
     /**
-     * @param json $reponse response from initiateMomoCharge method
-     *
+     * @param  json  $reponse  response from initiateMomoCharge method
      * @return json payload
      */
     public function getMomoStep($response)
@@ -151,7 +149,7 @@ class Raver extends Executor
     /**
      * Encrypts payload.
      *
-     * @param object $data
+     * @param  object  $data
      * @return string
      */
     public function encryptData($data)
@@ -164,8 +162,9 @@ class Raver extends Executor
 
     /**
      * Performs a refund.
-     * @param string $amount - amount to refund
-     * @param string $txref - transaction reference (this is the flwRef returned in the charge response)
+     *
+     * @param  string  $amount  - amount to refund
+     * @param  string  $txref  - transaction reference (this is the flwRef returned in the charge response)
      * @return object $response -  a stringified json payload
      */
     public function refund($amount, $txref)

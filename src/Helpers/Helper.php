@@ -47,9 +47,8 @@ class Helper
     /**
      * returns a base64 encoded encrypted payload.
      *
-     * @param json   $data
-     * @param string $key
-     *
+     * @param  json  $data
+     * @param  string  $key
      * @return string payload
      */
     public function encrypt3DES($data, $key)
@@ -74,8 +73,7 @@ class Helper
     /**
      * Verifies the sent payload to a webhook by examining the HTTP_VERIFY_HASH.
      *
-     * @param string $stored_signature - a signature generated from the request params
-     *
+     * @param  string  $stored_signature  - a signature generated from the request params
      * @return bool true
      */
     public static function verifySignatureHash($stored_signature)
@@ -98,9 +96,8 @@ class Helper
     /**
      * Generates a checksum to verify webhook payload.
      *
-     * @param array  $data       - request params from card payment
-     * @param string $secret_key - account secret key
-     *
+     * @param  array  $data  - request params from card payment
+     * @param  string  $secret_key  - account secret key
      * @return string $finalHash - checksum payload
      */
     public static function generateSignature($data, $secret_key)

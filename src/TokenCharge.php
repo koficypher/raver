@@ -29,8 +29,8 @@ class TokenCharge extends Executor
     /**
      * Function to perform a tokenized charge.
      *
-     * @param string $token
-     * @param array $data
+     * @param  string  $token
+     * @param  array  $data
      * @return json payload
      */
     public function charge($token, $data)
@@ -49,9 +49,9 @@ class TokenCharge extends Executor
     /**
      * Updates an email address associated with a token.
      *
-     * @param string $email
-     * @param string $token
-     * @param array $data - optional
+     * @param  string  $email
+     * @param  string  $token
+     * @param  array  $data  - optional
      * @return json payload
      */
     public function updateEmail($email, $token, $data = null)
