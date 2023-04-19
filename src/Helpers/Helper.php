@@ -81,11 +81,11 @@ class Helper
         $signature = (isset($_SERVER['HTTP_VERIF_HASH']) ? $_SERVER['HTTP_VERIF_HASH'] : '');
 
         if (! $signature) {
-            exit();
+            exit;
         }
 
         if ($signature !== $stored_signature) {
-            exit();
+            exit;
         }
 
         http_response_code(200);
@@ -105,7 +105,7 @@ class Helper
         $options = is_array($data) ? ksort($data) : false;
 
         if ($options === false) {
-            exit(); //we have no business here if you are not an array
+            exit; //we have no business here if you are not an array
         }
 
         $payload = '';
